@@ -7,6 +7,6 @@ $app['db.options'] = array(
     'host'     => 'localhost',
     'port'     => '3306',
     'dbname'   => 'microcms',
-    'user'     => 'root',
-    'password' => '',
+    'user'     => 'mybooks_user',
+    'password' => 'secret',
 );
