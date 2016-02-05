@@ -7,7 +7,7 @@
 
 {% for book in books %}
 <book>
-    <h2><a class="bookTitle" href="{{ path('book', { 'id' : book.id }) }}">{{ book.title }}</a></h2>
+    <h2><a class="bookTitle" href="">{{ book.title }}</a></h2><!-- path('book', { 'id' : book.id }) -->
     <p>{{ book.summary }}</p>
 </book>
 {% endfor %}
