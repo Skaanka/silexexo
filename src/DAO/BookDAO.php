@@ -5,7 +5,16 @@ namespace MyBooks\DAO;
 use MyBooks\Domain\Book;
 
 class BookDAO extends DAO { 
+    
+    /**
+     * @var \MicroCMS\DAO\AuthorDAO
+     */
+    private $AuthorDAO;
 
+    public function setAuthorDAO(AuthorDAO $AuthorDAO) {
+        $this->AuthorDAO = $AuthorDAO;
+    }
+    
     /**
      * Return a list of all books, sorted by date (most recent first).
      *
@@ -19,9 +28,11 @@ class BookDAO extends DAO {
         $books = array();
         foreach ($result as $row) {
             $bookId = $row['book_id'];
+            $author = $row['auth_id'];
             $books[$bookId] = $this->buildDomainObject($row);
         }
         return $books;
+        
     }
     
     /**
@@ -35,19 +46,49 @@ class BookDAO extends DAO {
         $sql = "select * from book WHERE book_id=?";
         $row = $this->getDb()->fetchAssoc($sql, array($id));
 
-        if ($row)
+        if ($row) {
             return $this->buildDomainObject($row);
-        else
+        } else {
             throw new \Exception("No book matching id " . $id);
+        }
     }   
 
     
+    /**
+     * Return a list of all author for an book, sorted by id (most recent last).
+     *
+     * @param integer $authorId The author id.
+     *
+     * @return array A list of all authors for the book.
+     */
+    public function findByAuthor($authorId) {
+        // The associated author is retrieved only once
+        $author = $this->authorDAO->find($authorId);
+
+        // art_id is not selected by the SQL query
+        // The author won't be retrieved during domain objet construction
+        $sql = "select * from author where auth_id=?";
+        $result = $this->getDb()->fetch($sql, array($authorId));
+
+        // Convert query result to an array of domain objects
+        $authors = array();
+        foreach ($result as $row) {
+            $authID = $row['auth_id'];
+            $author = $this->buildDomainObject($row);
+            // The associated article is defined for the constructed comment
+            $author->setArticle($article);
+            $authors[$authID] = $author;
+        }
+        return $authors;
+        
+    }
+    
     
      /**
-     * Creates an Article object based on a DB row.
+     * Creates an Book object based on a DB row.
      *
-     * @param array $row The DB row containing Article data.
-     * @return \MicroCMS\Domain\Article
+     * @param array $row The DB row containing Author data.
+     * @return \MicroCMS\Domain\Author
      */
     protected function buildDomainObject($row) {
         $book = new Book();
@@ -55,7 +96,11 @@ class BookDAO extends DAO {
         $book->setTitle($row['book_title']);
         $book->setIsbn($row['book_isbn']);
         $book->setSummary($row['book_summary']);
+        $book->setAuthorId($row['auth_id']);
+        
         return $book;
+        
     }
+
 
 }

@@ -16,6 +16,10 @@ $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 
 // Register services
 $app['dao.book'] = $app->share(function ($app) {
+    $authorDAO = new MyBooks\DAO\AuthorDAO($app['db']);
     return new MyBooks\DAO\BookDAO($app['db']);
 });
 
+$app['dao.author'] = $app->share(function ($app) {
+    return new MyBooks\DAO\AuthorDAO($app['db']);
+});

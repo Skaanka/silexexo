@@ -39,6 +39,12 @@ class Book {
      */
     private $authorId;
     
+    /**
+     * Associated Author.
+     *
+     * @var \MyBooks\Domain\Author
+     */
+    private $author;
     
 
     public function getId() {
@@ -75,12 +81,18 @@ class Book {
     }
 
     public function getAuthorId() {
-        return $this->auth_id;
+        return $this->authorId;
     }
 
     public function setAuthorId($authorId) {
-        $this->auth_id = $authorId;
+        $this->authorId = $authorId;
     }
     
-    
+    public function getAuthor() {
+        return $this->author;
+    }
+
+    public function setAuthor(Author $author) {
+        $this->author = $author;
+    }
 }

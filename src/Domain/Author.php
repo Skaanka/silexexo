@@ -25,13 +25,6 @@ class Author {
     */
     private $authLastName;
     
-    /**
-     * Associated Book.
-     *
-     * @var \MyBooks\Domain\Book
-     */
-    private $book;
-    
     
     public function getId() {
         return $this->id;
@@ -57,12 +50,6 @@ class Author {
         $this->authLastName = $authLastName;
     }
     
-    public function getBook() {
-        return $this->book;
-    }
-
-    public function setBook(Book $book) {
-        $this->book = $book;
-    }
+    
 
 }
