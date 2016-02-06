@@ -55,7 +55,6 @@ class BookDAO extends DAO {
         $book->setTitle($row['book_title']);
         $book->setIsbn($row['book_isbn']);
         $book->setSummary($row['book_summary']);
-        $book->setAuthor($row['auth_id']);
         return $book;
     }
 

@@ -37,7 +37,9 @@ class Book {
      *
      * @var integer
      */
-    private $author;
+    private $authorId;
+    
+    
 
     public function getId() {
         return $this->id;
@@ -72,11 +74,13 @@ class Book {
         $this->summary = $summary;
     }
 
-    public function getAuthor() {
+    public function getAuthorId() {
         return $this->auth_id;
     }
 
-    public function setAuthor($author) {
-        $this->auth_id = $author;
+    public function setAuthorId($authorId) {
+        $this->auth_id = $authorId;
     }
+    
+    
 }

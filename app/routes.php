@@ -7,3 +7,9 @@ $app->get('/', function() use ($app) {
     
 })->bind('home');
 
+
+//Book detail
+$app->get('/book/{id}', function($id) use ($app) {
+    $book = $app['dao.book']->find($id);
+    return $app['twig']->render('book.html.twig', array('book' => $book));
+})->bind('book');
