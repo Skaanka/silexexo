@@ -72,11 +72,11 @@ class Book {
         $this->summary = $summary;
     }
 
-    public function getAuth() {
+    public function getAuthor() {
         return $this->auth_id;
     }
 
-    public function setAuth($author) {
+    public function setAuthor($author) {
         $this->auth_id = $author;
     }
 }
