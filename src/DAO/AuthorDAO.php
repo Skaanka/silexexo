@@ -23,14 +23,14 @@ class AuthorDAO extends DAO {
      *
      * @return array A list of all comments for the article.
      */
-    public function findByBook($bookId) {
+    public function findByBook($author) {
         // The associated book is retrieved only once
-        $book = $this->BookDAO->find($bookId);
+        $book = $this->BookDAO->find($author);
 
         // book_id is not selected by the SQL query
         // The book won't be retrieved during domain objet construction
         $sql = "select * from author where auth_id=?";
-        $result = $this->getDb()->fetchAll($sql, array($bookId));
+        $result = $this->getDb()->fetchAll($sql, array($author));
 
         // Convert query result to an array of domain objects
         $authors = array();
@@ -40,6 +40,8 @@ class AuthorDAO extends DAO {
             // The associated article is defined for the constructed comment
             $author->setBook($book);
             $authors[$authorId] = $author;
+            echo '<pre>';
+            print_r($authors);
         }
         return $authors;
     }
@@ -56,12 +58,7 @@ class AuthorDAO extends DAO {
         $author->setAuthFirstName($row['auth_first_name']);
         $author->setAuthLastName($row['auth_last_name']);
 
-        if (array_key_exists('auth_id', $row)) {
-            // Find and set the associated article
-            $bookId = $row['book_id'];
-            $book = $this->bookDAO->find($bookId);
-            $author->setBook($book);
-        }
+        
 
         return $author;
     }

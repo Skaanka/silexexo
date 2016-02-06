@@ -19,6 +19,7 @@ class BookDAO extends DAO {
         $books = array();
         foreach ($result as $row) {
             $bookId = $row['book_id'];
+            $author = $row['auth_id'];
             $books[$bookId] = $this->buildDomainObject($row);
         }
         return $books;
