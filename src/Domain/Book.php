@@ -3,7 +3,7 @@
 namespace MyBooks\Domain;
 
 class Book {
-    
+
     /**
      * Book id.
      *
@@ -24,20 +24,21 @@ class Book {
      * @var string
      */
     private $isbn;
-    
+
     /**
      * Book summary.
      *
      * @var string
      */
     private $summary;
-    
+
     /**
-     * Book id Author.
+     * Associated author.
      *
-     * @var integer
+     * @var \MyBooks\Domain\Author
      */
-    private $author;
+    private  $author;
+
 
     public function getId() {
         return $this->id;
@@ -55,7 +56,7 @@ class Book {
         $this->title = $title;
     }
 
-    
+
     public function getIsbn() {
         return $this->isbn;
     }
@@ -63,7 +64,7 @@ class Book {
     public function setIsbn($isbn) {
         $this->isbn = $isbn;
     }
-    
+
     public function getSummary() {
         return $this->summary;
     }
@@ -72,11 +73,11 @@ class Book {
         $this->summary = $summary;
     }
 
-    public function getAuth() {
-        return $this->auth_id;
+    public function getAuthor() {
+        return $this->author;
     }
 
-    public function setAuth($author) {
-        $this->auth_id = $author;
+    public function setAuthor(Author $author) {
+        $this->author = $author;
     }
 }

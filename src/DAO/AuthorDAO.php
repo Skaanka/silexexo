@@ -2,65 +2,39 @@
 
 namespace MyBooks\DAO;
 
-use MyBooks\Domain\Book;
 use MyBooks\Domain\Author;
 
-class AuthorDAO extends DAO { 
+class AuthorDAO extends DAO {
 
-    /**
-     * @var \MyBooks\DAO\BookDAO
-     */
-    private $bookDAO;
-
-    public function setBookDAO(BookDAO $bookDAO) {
-        $this->BookDAO = $bookDAO;
-    }
-
-    /**
-     * Return a list of all comments for an article, sorted by date (most recent last).
+	/**
+     * Returns the author matching the supplied id.
      *
-     * @param integer $articleId The article id.
+     * @param integer $id.
      *
-     * @return array A list of all comments for the article.
+     * @return \MyBooks\Domain\Author|throws an exception if no matching author is found
      */
-    public function findByBook($author) {
-        // The associated book is retrieved only once
-        $book = $this->BookDAO->find($author);
+    public function find($id) {
+        $sql = "SELECT * FROM author WHERE auth_id=?";
+        $row = $this->getDb()->fetchAssoc($sql, array($id));
 
-        // book_id is not selected by the SQL query
-        // The book won't be retrieved during domain objet construction
-        $sql = "select * from author where auth_id=?";
-        $result = $this->getDb()->fetchAll($sql, array($author));
-
-        // Convert query result to an array of domain objects
-        $authors = array();
-        foreach ($result as $row) {
-            $authorId = $row['auth_id'];
-            $author = $this->buildDomainObject($row);
-            // The associated article is defined for the constructed comment
-            $author->setBook($book);
-            $authors[$authorId] = $author;
-            echo '<pre>';
-            print_r($authors);
-        }
-        return $authors;
+        if ($row)
+            return $this->buildDomainObject($row);
+        else
+            throw new \Exception("No author matching id " . $id);
     }
 
     /**
      * Creates an Author object based on a DB row.
      *
-     * @param array $row The DB row containing Comment data.
-     * @return \MyBooks\Domain\author
+     * @param array $row The DB row containing Author data.
+     *
+     * @return \MyBooks\Domain\Author.
      */
     protected function buildDomainObject($row) {
         $author = new Author();
         $author->setId($row['auth_id']);
-        $author->setAuthFirstName($row['auth_first_name']);
-        $author->setAuthLastName($row['auth_last_name']);
-
-        
-
+        $author->setFirstName($row['auth_first_name']);
+        $author->setLastName($row['auth_last_name']);
         return $author;
     }
-
 }

@@ -3,9 +3,9 @@
 namespace MyBooks\Domain;
 
 class Author {
-    
+
     /**
-     * Book id.
+     * Author id.
      *
      * @var integer
      */
@@ -16,56 +16,40 @@ class Author {
      *
      * @var string
      */
-    private $auth_first_name;
+    private $firstName;
 
     /**
-     * Book autho last name.
+     * Book author last name.
      *
      * @var string
      */
-    private $auth_last_name;
-    
-    /**
-     * associated article
-     *
-     * @var \MyBooks\Domain\Book
-     */
-    private $book;
-    
+    private $lastName;
+
+
 
     public function getId() {
-        return $this->id;
+        return $this->authorId;
     }
 
-    public function setId($id) {
-        $this->id = $id;
+    public function setId($authorId) {
+        $this->authorId = $authorId;
     }
 
-    public function getAuthFirstName() {
-        return $this->auth_first_name;
+    public function getFirstName() {
+        return $this->firstName;
     }
 
-    public function setAuthFirstName($auth_first_name) {
-        $this->auth_first_name = $auth_first_name;
+    public function setFirstName($firstName) {
+        $this->firstName = $firstName;
     }
 
-    
-    public function getAuthLastName() {
-        return $this->auth_last_name;
+
+    public function getLastName() {
+        return $this->lastName;
     }
 
-    public function setAuthLastName($auth_last_name) {
-        $this->auth_last_name = $auth_last_name;
-    }
-    
-    //association avec un livre via $book
-    
-    public function getBook() {
-        return $this->book;
-    }
-
-    public function setBook(Book $book) {
-        $this->book = $book;
+    public function setLastName($lastName) {
+        $this->lastName = $lastName;
     }
 
 }
